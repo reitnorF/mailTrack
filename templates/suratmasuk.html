@@ -1,0 +1,261 @@
+$def with (suratMasuk)
+
+<html>
+<head>
+<title>SalmanTracking</title>
+<link rel="shortcut icon" type="image/png" href="static/icon.png"/>
+<style>
+
+#sidebar {
+	position: fixed;
+	height: 100%;
+	width:256px;
+	background-color: rgb(46,46,72);
+	top:0px;
+	left:0px;
+	  z-index: 10;
+}
+
+#sidebar img {
+	width: 142px;
+  padding-left: 53px;
+  padding-top: 41px;
+
+}
+
+#add {
+	width: 147px;
+  border: 2px solid rgb(99,97,118);
+  padding: 14px;
+  text-align: center;
+  margin-left: 40px;
+  margin-top: 28px;
+  color: #e2e1e6;
+  font-family: helvetica;
+  font-weight: bold;
+}
+
+#menus {
+	margin-top:30px;
+}
+
+.blockmenu {
+	height: 40px;
+  padding-left: 41px;
+  font-family: helvetica;
+  color: #e2e1e6;
+  padding-top: 20px;
+
+}
+
+.blockmenu:hover{
+	background-color: rgb(41,41,65);
+	border-left:3px solid #e2e1e6;
+	padding-left: 38px;
+}
+
+.active{
+	background-color: rgb(41,41,65);
+	border-left:3px solid #e2e1e6;
+	padding-left: 38px;
+}
+
+#topbar {
+	position: fixed;
+	top:0px;
+	left:0px;
+	z-index: 7;
+	width: 100%;
+	height: 72px;
+	border-bottom: 3px solid rgb(247,247,247) ;
+	    background-color: white;
+}
+
+#topbar h1 {
+	  position: fixed;
+    right: 27px;
+    font-size: 18px;
+    font-family: helvetica;
+    top: 13px;
+    color: rgb(128, 125, 125);
+    font-weight: 200;
+}
+
+#content{
+	margin-left: 326px;
+    margin-top: 108px;
+}
+
+.singlemail{
+    width: 944px;
+    border: 1px solid #ebebeb;
+
+
+    margin: 20px 0px;
+}
+
+.singlemail:hover{
+	background-color: #ebebeb;
+}
+
+.singlemail h2 {
+font-family: helvetica;
+    font-size: 17px;
+    margin-top: 10px;
+    margin-left: 17px;
+    margin-right: 22px;
+}
+
+.singlemail table {
+	margin-left: 16px;
+	padding-bottom: 20px;
+	font-family:helvetica;
+}
+
+#searchbox {
+	    margin-left: 334px;
+    margin-top: 17px;
+    padding: 10px;
+    width: 600px;
+}
+
+#sidebar a{
+	text-decoration: none;
+}
+
+#add:hover{
+	border: 2px solid white;
+}
+
+
+.control_button {
+    width: 118px;
+    border: 2px solid white;
+    padding: 14px 0px;
+    text-align: center;
+    margin: 0px 29px;
+    color: #e2e1e6;
+    font-family: helvetica;
+    font-weight: bold;
+    background-color: #2e2e48;
+    display: inline-block;
+}
+
+.control_button:hover{
+	cursor :pointer;
+	border: 2px solid rgb(99,97,118);
+}
+
+
+</style>
+
+</head>
+
+<body>
+<div id="sidebar">
+	<img src="static/logo.png">	
+	<div id="menus">
+		<div class="blockmenu active">Surat Masuk </div>
+		<a href="/"><div class="blockmenu ">Surat Keluar </div></a>
+	</div>
+	<a href="/addmailin"><div id="add">TAMBAH SURAT MASUK</div></a>
+	<a href="/addmail"><div id="add">TAMBAH SURAT KELUAR</div></a>
+</div>
+<div id="topbar">
+<input id="searchbox" type="text" style='display:none' placeholder="Search" onkeypress="search(event)">
+<h1>Admin  &#9660;</h1>
+</div>
+
+<div id="content">
+
+$for i in reversed(suratMasuk):
+	<div class="singlemail" onclick="getinfo(this)" id='$i["ID"]'>
+	<h2> $i["dari_institusi"] <br><hr>  <b style='font-weight: lighter;'>$i["judul"] <br> $i["ringkasan"] </b> </h2>
+	<table style='display:none' class="detail" cellspacing="10px">
+		<tr><td>Nomor Surat</td><td>$i["nomor_surat"] </td></tr>
+		<tr><td>Nomor Agenda</td><td>$i["nomor_agenda"] </td></tr>
+		<tr><td>Dari</td><td>$i["dari_orang"] -$i["dari_jabatan"] - $i["dari_institusi"] </td></tr>
+		<tr><td>Kontak Pengirim</td><td>$i["dari_kontak"] </td></tr>
+		<tr><td>Ke</td><td>$i["ke_orang"] -$i["ke_jabatan"] - $i["ke_bidang"] </td></tr>
+		<tr><td>Tanggal</td><td>$i["tanggal_surat"] </td></tr>
+		<tr><td>Tanggal Diterima</td><td>	$i["tanggal_terima"]  </td></tr>
+		<tr><td>Surat Diambil Oleh</td><td>$i["surat_diambil_oleh"] </td></tr>
+		<tr><td>Keterangan</td><td>$i["keterangan"] </td></tr>
+		<tr><td>  </td><td>
+			<div class="control_button" onclick="deleteNode()" >Delete</div>
+		
+		</td></tr>
+	</table>
+
+	
+	</div>
+
+</div>
+</body>
+
+
+</html>
+
+<script>
+
+var i = 0;
+var activeNode = 0
+
+function getinfo(x){
+	console.log(x.id)
+	activeNode  = x.id
+	if (i == 0) {
+		x.childNodes[3].style = "display:block"
+		x.childNodes[3].setAttribute("id","lastClick")
+		i = i + 1;
+	}
+	else {
+		y = document.getElementById("lastClick")
+		y.style = "display:none"
+		y.removeAttribute("id")
+		x.childNodes[3].style = "display:block"
+		x.childNodes[3].setAttribute("id","lastClick")
+	}
+}
+
+function deleteNode(){
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if(this.readyState == 4 && this.status == 200){
+			console.log("Data Sent!")
+			console.log(this.responseText)
+		}
+	}
+	xhttp.open("POST","/requestDeleteMasuk")
+	xhttp.send(activeNode)
+	document.getElementById(activeNode).outerHTML = "";
+}
+
+function editNode(){
+	window.location = "/editSuratKeluar/"+activeNode
+}
+
+
+
+
+
+var mailMap = new Map()
+
+
+
+
+function search(x){
+	var n = document.getElementById("searchbox").value
+	console.log(n)
+	var found = new Array()
+	for (var [key,value] of mailMap.entries()){
+		if (value.indexOf(n) >= 0) {
+			found.push(key)
+		}
+	}
+	console.log(found)
+
+}
+
+
+</script>

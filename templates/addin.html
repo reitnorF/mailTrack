@@ -1,0 +1,367 @@
+$def with (kodesurat)
+
+<html>
+<head>
+<title>SalmanTracking</title>
+<link rel="shortcut icon" type="image/png" href="static/icon.png"/>
+
+
+
+
+
+
+<style>
+
+#sidebar {
+	position: fixed;
+	height: 100%;
+	width:256px;
+	background-color: rgb(46,46,72);
+	top:0px;
+	left:0px;
+	  z-index: 10;
+}
+
+#sidebar img {
+	width: 142px;
+  padding-left: 53px;
+  padding-top: 41px;
+
+}
+
+#add {
+	width: 147px;
+  border: 2px solid rgb(99,97,118);
+  padding: 14px;
+  text-align: center;
+  margin-left: 40px;
+  margin-top: 28px;
+  color: #e2e1e6;
+  font-family: helvetica;
+  font-weight: bold;
+}
+
+#menus {
+	margin-top:30px;
+}
+
+.blockmenu {
+	height: 40px;
+  padding-left: 41px;
+  font-family: helvetica;
+  color: #e2e1e6;
+  padding-top: 20px;
+
+}
+
+.blockmenu:hover{
+	background-color: rgb(41,41,65);
+	border-left:3px solid #e2e1e6;
+	padding-left: 38px;
+}
+
+.active{
+	background-color: rgb(41,41,65);
+	border-left:3px solid #e2e1e6;
+	padding-left: 38px;
+}
+
+#topbar {
+	position: fixed;
+	top:0px;
+	left:0px;
+	z-index: 7;
+	width: 100%;
+	height: 72px;
+	border-bottom: 3px solid rgb(247,247,247) ;
+	    background-color: white;
+}
+
+#topbar h1 {
+	  position: fixed;
+    right: 27px;
+    font-size: 18px;
+    font-family: helvetica;
+    top: 13px;
+    color: rgb(128, 125, 125);
+    font-weight: 200;
+}
+
+#content{
+	margin-left: 326px;
+    margin-top: 108px;
+}
+
+.singlemail{
+    width: 944px;
+    border: 1px solid #ebebeb;
+}
+
+.singlemail:hover{
+	background-color: #ebebeb;
+}
+
+.singlemail h2 {
+font-family: helvetica;
+    font-size: 17px;
+    margin-top: 10px;
+    margin-left: 17px;
+    margin-right: 22px;
+}
+
+.singlemail table {
+	margin-left: 16px;
+	padding-bottom: 20px;
+	font-family:helvetica;
+}
+
+.searchbox {
+  padding: 10px;
+  width: 600px;
+  font-family: helvetica;
+    font-size: 19px;
+
+    margin: 5px 0px;
+
+}
+
+#sidebar a{
+	text-decoration: none;
+}
+
+#add:hover{
+	border: 2px solid white;
+}
+
+.isi_form{
+	font-family: helvetica;
+    font-size: 19px;
+   
+}
+
+.heading {
+ padding-right: 45px;
+}
+
+.select_s {
+	font-family: helvetica;
+    font-size: 19px;
+    padding: 9px;
+    margin: 6px 0;
+}
+
+
+.cbox {
+	    width: 52px;
+    height: 47px;
+    margin-left: -2px;
+}
+
+
+.nomor_surat{
+	position: fixed;
+    left: 336px;
+    top: 16px;
+    font-size: 30px;
+    border: 0px;
+    padding: 5px 0px;
+    width: 500px;
+}
+
+#add_2 {
+	width: 147px;
+  border: 2px solid rgb(99,97,118);
+  padding: 14px;
+  text-align: center;
+  margin-left: 299px;
+  margin-top: 28px;
+  color: #e2e1e6;
+  font-family: helvetica;
+  font-weight: bold;
+  background-color: #2e2e48;
+}
+
+
+</style>
+
+</head>
+
+<body>
+<div id="sidebar">
+	<img src="static/logo.png">	
+
+<div id="menus">
+		<a href="/suratMasuk"><div class="blockmenu active ">Surat Masuk </div></a>
+		<a href="/"><div class="blockmenu  ">Surat Keluar </div></a>
+	</div>
+	<a href="/addmailin"><div id="add">TAMBAH SURAT MASUK</div></a>
+	<a href="/addmail"><div id="add">TAMBAH SURAT KELUAR</div></a>
+
+
+</div>
+<div id="topbar">
+<input class="nomor_surat" id="no_surat_string" type="text" placeholder="Search" onkeypress="search(event)" >
+<h1>Admin  &#9660;</h1>
+</div>
+
+<div id="content">
+
+
+
+
+<table class="isi_form">
+<tr><td class="heading">Judul Surat</td><td><input id="judul_surat" class="searchbox" type="text" placeholder="Judul Surat" ></td></tr>
+<tr><td class="heading">Ringkasan</td><td><input id="ringkasan_surat" class="searchbox" type="text" placeholder="Ringkasan" ></td></tr>
+
+<tr><td class="heading">Jenis Agenda</td><td>
+<select class="select_s" id="jenis_surat" style='margin-top:12px' onclick="jenisSurat()">
+  <option value="S.1">Surat Keputusan</option>
+  <option value="S.2">Surat Pengumuman</option>
+  <option value="S.3">Surat Edaran</option>
+  <option value="S.4">Surat Keterangan</option>
+  <option value="S.5">Surat Rekomendasi</option>
+  <option value="S.6">Surat Permohonan</option>
+	<option value="S.7">Surat Undangan</option>
+	<option value="S.8">Surat Kuasa</option>
+	<option value="S.9">Surat Perjanjian</option>
+	<option value="S.10">Surat Pengantar</option>
+	<option value="S.11">Surat Tugas</option>
+	<option value="S.12">Surat Ucapan</option>
+	<option value="S.13">Surat Peringatan</option>
+	<option value="S.14">Surat Ijin</option>
+	<option value="S.15">Surat Pengusulan</option>
+	<option value="S.16">Surat Balasan</option>
+	<option value="S.17">Surat Pembatalan</option>
+</select>
+</td></tr>
+
+<tr><td class="heading">Dari (Nama Person)</td><td><input id ="f_darinama" class="searchbox" type="text" placeholder="Dari (Nama Person)"></td></tr>
+<tr><td class="heading">Dari (Nama Institusi)</td><td><input id ="f_dariinst" class="searchbox" type="text" placeholder="Dari (Nama Institusi)" ></td></tr>
+<tr><td class="heading">Dari (Jabatan)</td><td><input id ="f_darijabatan" class="searchbox" type="text" placeholder="Dari (Jabatan)"></td></tr>
+<tr><td class="heading">Alamat Pengirim</td><td><input id ="f_alamatpengirim" class="searchbox" type="text" placeholder="Alamat Pengirim"></td></tr>
+<tr><td class="heading">Kontak Pengirim</td><td><input id ="f_kontak" class="searchbox" type="text" placeholder="Kontak"></td></tr>
+
+
+
+
+
+<tr><td class="heading">Kepada (Person)</td><td><input id="f_kepadainst" class="searchbox" type="text" placeholder="Kepada (Person)"></td></tr>
+<tr><td class="heading">Kepada (Bidang)</td><td><input id="f_kepadanama" class="searchbox" type="text" placeholder="Kepada (Bidang)" ></td></tr>
+<tr><td class="heading">Kepada (Jabatan)</td><td><input id="f_kepadajabatan" class="searchbox" type="text" placeholder="Kepada (Jabatan)" ></td></tr>
+
+
+
+
+<tr><td class="heading">Tanggal Surat</td><td><input id="f_tanggalsurat"  class="searchbox" type="text" placeholder="Tanggal Surat" ></td></tr>
+<tr><td class="heading">Tanggal Diterima</td><td><input id="f_tanggalditerima"  class="searchbox" type="text" placeholder="Tanggal Diterima" ></td></tr>
+
+<tr><td class="heading">Nomor Surat</td><td><input id="f_nomorsurat"  class="searchbox" type="text" placeholder="Nomor Surat" ></td></tr>
+
+
+<tr><td class="heading">Surat Diambil Oleh</td><td><input id ="f_diambiloleh" class="searchbox" type="text" placeholder="Surat diambil oleh" ></td></tr>
+
+
+
+<tr><td class="heading">Keterangan</td><td><input id ="f_ket" class="searchbox" type="text" placeholder="Keterangan"></td></tr>
+
+
+
+</table>
+
+<div id="add_2" onclick="packData()">TAMBAH SURAT</div>
+
+</div>
+</body>
+
+
+</html>
+
+
+<script>
+
+var surat_id = $kodesurat
+var jenis_surat = "S.1"
+
+
+
+function updateNomorSurat(){
+	var nodex = document.getElementById("no_surat_string")
+	kode_surat = surat_id +" / "+ jenis_surat 
+	nodex.value = kode_surat
+
+}
+
+function jenisSurat(){
+	var node = document.getElementById("jenis_surat")
+	jenis_surat = node.value
+	updateNomorSurat()
+}
+
+function bagianSurat(){
+	console.log("yeah!")
+	var node = document.getElementById("bagian_surat")
+	bagian_surat = node.value
+	updateNomorSurat()
+}
+
+updateNomorSurat()
+
+function packData(){
+	var dataPackage = new Object();
+	dataPackage.ID = surat_id
+	dataPackage.nomor_agenda = kode_surat
+	var node = document.getElementById("judul_surat")
+	dataPackage.judul = node.value
+	node = document.getElementById("ringkasan_surat")
+	dataPackage.ringkasan = node.value
+	node = document.getElementById("f_darinama")
+	dataPackage.dari_orang = node.value
+	node = document.getElementById("f_dariinst")
+	dataPackage.dari_institusi = node.value
+	node = document.getElementById("f_darijabatan")
+	dataPackage.dari_jabatan = node.value
+	node = document.getElementById("f_alamatpengirim")
+	dataPackage.dari_alamat = node.value
+	node = document.getElementById("f_kontak")
+	dataPackage.dari_kontak = node.value
+	node = document.getElementById("f_kepadainst")
+	dataPackage.ke_bidang = node.value
+	node = document.getElementById("f_kepadanama")
+	dataPackage.ke_orang = node.value
+	node = document.getElementById("f_kepadajabatan")
+	dataPackage.ke_jabatan = node.value
+	node = document.getElementById("f_tanggalsurat")
+	dataPackage.tanggal_surat = node.value
+	node = document.getElementById("f_tanggalditerima")
+	dataPackage.tanggal_terima = node.value
+	node = document.getElementById("f_nomorsurat")
+	dataPackage.nomor_surat = node.value
+	node = document.getElementById("f_diambiloleh")
+	dataPackage.surat_diambil_oleh = node.value
+	node = document.getElementById("f_ket")
+	dataPackage.keterangan = node.value
+
+
+	console.log(dataPackage)
+	sendData(JSON.stringify(dataPackage))
+
+	
+}
+
+function sendData(package){
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if(this.readyState == 4 && this.status == 200){
+			console.log("Data Sent!")
+			console.log(this.responseText)
+			window.location = "/suratMasuk"
+		}
+	}
+	xhttp.open("POST","/dataGatewayMasuk")
+	xhttp.send(package)
+}
+
+
+
+
+</script>

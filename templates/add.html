@@ -1,0 +1,406 @@
+$def with (kodesurat)
+
+<html>
+<head>
+<title>SalmanTracking</title>
+<link rel="shortcut icon" type="image/png" href="static/icon.png"/>
+
+
+
+
+
+
+<style>
+
+#sidebar {
+	position: fixed;
+	height: 100%;
+	width:256px;
+	background-color: rgb(46,46,72);
+	top:0px;
+	left:0px;
+	  z-index: 10;
+}
+
+#sidebar img {
+	width: 142px;
+  padding-left: 53px;
+  padding-top: 41px;
+
+}
+
+#add {
+	width: 147px;
+  border: 2px solid rgb(99,97,118);
+  padding: 14px;
+  text-align: center;
+  margin-left: 40px;
+  margin-top: 28px;
+  color: #e2e1e6;
+  font-family: helvetica;
+  font-weight: bold;
+}
+
+#menus {
+	margin-top:30px;
+}
+
+.blockmenu {
+	height: 40px;
+  padding-left: 41px;
+  font-family: helvetica;
+  color: #e2e1e6;
+  padding-top: 20px;
+
+}
+
+.blockmenu:hover{
+	background-color: rgb(41,41,65);
+	border-left:3px solid #e2e1e6;
+	padding-left: 38px;
+}
+
+.active{
+	background-color: rgb(41,41,65);
+	border-left:3px solid #e2e1e6;
+	padding-left: 38px;
+}
+
+#topbar {
+	position: fixed;
+	top:0px;
+	left:0px;
+	z-index: 7;
+	width: 100%;
+	height: 72px;
+	border-bottom: 3px solid rgb(247,247,247) ;
+	    background-color: white;
+}
+
+#topbar h1 {
+	  position: fixed;
+    right: 27px;
+    font-size: 18px;
+    font-family: helvetica;
+    top: 13px;
+    color: rgb(128, 125, 125);
+    font-weight: 200;
+}
+
+#content{
+	margin-left: 326px;
+    margin-top: 108px;
+}
+
+.singlemail{
+    width: 944px;
+    border: 1px solid #ebebeb;
+}
+
+.singlemail:hover{
+	background-color: #ebebeb;
+}
+
+.singlemail h2 {
+font-family: helvetica;
+    font-size: 17px;
+    margin-top: 10px;
+    margin-left: 17px;
+    margin-right: 22px;
+}
+
+.singlemail table {
+	margin-left: 16px;
+	padding-bottom: 20px;
+	font-family:helvetica;
+}
+
+.searchbox {
+  padding: 10px;
+  width: 600px;
+  font-family: helvetica;
+    font-size: 19px;
+
+    margin: 5px 0px;
+
+}
+
+#sidebar a{
+	text-decoration: none;
+}
+
+#add:hover{
+	border: 2px solid white;
+}
+
+.isi_form{
+	font-family: helvetica;
+    font-size: 19px;
+   
+}
+
+.heading {
+ padding-right: 45px;
+}
+
+.select_s {
+	font-family: helvetica;
+    font-size: 19px;
+    padding: 9px;
+    margin: 6px 0;
+}
+
+
+.cbox {
+	    width: 52px;
+    height: 47px;
+    margin-left: -2px;
+}
+
+
+.nomor_surat{
+	position: fixed;
+    left: 336px;
+    top: 16px;
+    font-size: 30px;
+    border: 0px;
+    padding: 5px 0px;
+    width: 500px;
+}
+
+#add_2 {
+	width: 147px;
+  border: 2px solid rgb(99,97,118);
+  padding: 14px;
+  text-align: center;
+  margin-left: 299px;
+  margin-top: 28px;
+  color: #e2e1e6;
+  font-family: helvetica;
+  font-weight: bold;
+  background-color: #2e2e48;
+}
+
+
+</style>
+
+</head>
+
+<body>
+<div id="sidebar">
+	<img src="static/logo.png">	
+
+
+<div id="menus">
+		<a href="/suratMasuk"><div class="blockmenu  ">Surat Masuk </div></a>
+		<a href="/"><div class="blockmenu active ">Surat Keluar </div></a>
+	</div>
+	<a href="/addmailin"><div id="add">TAMBAH SURAT MASUK</div></a>
+	<a href="/addmail"><div id="add">TAMBAH SURAT KELUAR</div></a>
+
+
+
+</div>
+<div id="topbar">
+<input class="nomor_surat" id="no_surat_string" type="text" placeholder="Search" onkeypress="search(event)" >
+<h1>Admin  &#9660;</h1>
+</div>
+
+<div id="content">
+
+
+
+
+<table class="isi_form">
+<tr><td class="heading">Judul Surat</td><td><input id="judul_surat" class="searchbox" type="text" placeholder="Judul / Perihal" ></td></tr>
+<tr><td class="heading">Jenis Surat</td><td>
+<select class="select_s" id="jenis_surat" style='margin-top:12px' onclick="jenisSurat()">
+  <option value="S.1">Surat Keputusan</option>
+  <option value="S.2">Surat Pengumuman</option>
+  <option value="S.3">Surat Edaran</option>
+  <option value="S.4">Surat Keterangan</option>
+  <option value="S.5">Surat Rekomendasi</option>
+  <option value="S.6">Surat Permohonan</option>
+	<option value="S.7">Surat Undangan</option>
+	<option value="S.8">Surat Kuasa</option>
+	<option value="S.9">Surat Perjanjian</option>
+	<option value="S.10">Surat Pengantar</option>
+	<option value="S.11">Surat Tugas</option>
+	<option value="S.12">Surat Ucapan</option>
+	<option value="S.13">Surat Peringatan</option>
+	<option value="S.14">Surat Ijin</option>
+	<option value="S.15">Surat Pengusulan</option>
+	<option value="S.16">Surat Balasan</option>
+	<option value="S.17">Surat Pembatalan</option>
+</select>
+</td></tr>
+
+<tr><td class="heading">Bagian</td><td>
+<select class="select_s" id="bagian_surat" onclick="bagianSurat()">
+  <option value="YPM-0000">Pembina</option>
+  <option value="YPM-1000">Ketua Umum Pengurus</option>
+  <option value="YPM-1100">Komisi Fatwa</option>
+  <option value="YPM-1200">Dewan Pengawas</option>
+  <option value="YPM-2000">Sekretaris Umum</option>
+  <option value="YPM-2100">Sekretaris Bidang Sekretariat, Personalia, Humas, Direksi</option>
+	<option value="YPM-2110">Kepanitiaan Insidental</option>
+	<option value="YPM-2120">Asisten Sekretaris</option>
+	<option value="YPM-2101">Korsa / Kepanitiaan Insidental</option>
+	<option value="YPM-2200">Sekretaris Bidang Rumah Tangga</option>
+	<option value="YPM-2300">Sekretaris Bidang Pembangunan</option>
+	<option value="YPM-2400">Sekretaris Bidang Teknologi Informasi</option>
+	<option value="YPM-2500">Sekretaris Bidang Kebudayaan</option>
+	<option value="YPM-3000">Bendahara Umum</option>
+	<option value="YPM-3001">Wakil Bendahara Umum</option>
+	<option value="YPM-3100">Bendahara I</option>
+	<option value="YPM-3100">Bendahara II</option>
+	<option value="YPM-3101">Manajer Keuangan</option>
+	<option value="YPM-4000">Ketua Bidang Dakwah</option>
+	<option value="YPM-4100">Wakil Ketua I Bidang Dakwah</option>
+	<option value="YPM-4200">Wakil Ketua II Bidang Dakwah</option>
+	<option value="YPM-4300">Pengajian Wanita Salman</option>
+	<option value="YPM-4400">KBIH</option>
+	<option value="YPM-5000">Ketua Bidang Kemahasiswaan dan Kaderisasi</option>
+	<option value="YPM-5100">Wakil Ketua I Bidang Kemahasiswaan dan Kaderisasi</option>
+	<option value="YPM-5200">Wakil Ketua II Bidang Kemahasiswaan dan Kaderisasi</option>
+	<option value="YPM-5300">Wakil Ketua II Bidang Kemahasiswaan dan Kaderisasi</option>
+	<option value="YPM-5400">Karisma</option>
+	<option value="YPM-5500">PAS</option>
+	<option value="YPM-5600">Pustena</option>
+	<option value="YPM-5700">Mata</option>
+	<option value="YPM-5800">Saintika</option>
+	<option value="YPM-5800">Aksara</option>
+	<option value="YPM-5A00">Student Center Salman</option>
+	<option value="YPM-5B00">Rumah Visi</option>
+
+	<option value="YPM-5C00">Asrama</option>
+	<option value="YPM-6000">Ketua Bidang Pengkajian dan Penerbitan</option>
+	<option value="YPM-6100">Wakil Ketua I Bidang Pengkajian dan Penerbitan</option>
+	<option value="YPM-6200">Wakil Ketua II Bidang Pengkajian dan Penerbit</option>
+	<option value="YPM-6300">Budaya</option>
+	<option value="YPM-6400">Media</option>
+	<option value="YPM-7000">Ketua Lembaga Pengembangan Pendidikan (LPP)</option>
+	<option value="YPM-7100">Wakil Ketua Lembaga Pengembangan Pendidikan (LPP)</option>
+	<option value="YPM-8000">Rumah Amal (RA)</option>
+	<option value="YPM-9000">Satuan Pengawas Intern (SPI)</option>
+	<option value="YPM-A100">Ketua Bidang Pelayanan dan Pemberdayaan</option>
+	<option value="YPM-B100">Pusat Halal</option>
+	<option value="YPM-C100">Rumah Sakit</option>
+	<option value="YPM-D101">Manajer Bidang Sumberdaya</option>
+	<option value="YPM-D100">Ketua Bidang Sumberdaya</option>
+	<option value="YPM-D200">Wakil Ketua Bidang Sumberdaya</option>
+</select>
+</td></tr>
+
+
+<tr><td class="heading">Kepada (Nama Institusi)</td><td><input id="f_kepadainst" class="searchbox" type="text" placeholder="Kepada (Nama Institusi)"></td></tr>
+<tr><td class="heading">Kepada (Nama Person)</td><td><input id="f_kepadanama" class="searchbox" type="text" placeholder="Kepada (Nama Person)" ></td></tr>
+<tr><td class="heading">Kepada (Jabatan)</td><td><input id="f_kepadajabatan" class="searchbox" type="text" placeholder="Kepada (Jabatan)" ></td></tr>
+<tr><td class="heading">Tanggal Surat</td><td><input id="f_tanggalsurat"  class="searchbox" type="text" placeholder="Tanggal Surat" ></td></tr>
+<tr><td class="heading">Dari (Nama Person)</td><td><input id ="f_darinama" class="searchbox" type="text" placeholder="Dari (Nama Person)"></td></tr>
+<tr><td class="heading">Dari (Nama Bidang)</td><td><input id ="f_daribidang" class="searchbox" type="text" placeholder="Dari (Nama Bidang)" ></td></tr>
+<tr><td class="heading">Dari (Jabatan)</td><td><input id ="f_darijabatan" class="searchbox" type="text" placeholder="Dari (Jabatan)"></td></tr>
+<tr><td class="heading">Alamat Pengiriman</td><td><input id ="alamat" class="searchbox" type="text" placeholder="Alamat Pengiriman" ></td></tr>
+<tr><td class="heading">Penandatangan Dalam Surat</td><td><input id ="f_ttd" class="searchbox" type="text" placeholder="Penandatangan dalam surat"></td></tr>
+<tr><td class="heading">Diketahui Direktur Eksekutif?</td><td><input id ="f_diketahui" class="cbox" type="checkbox"></td></tr>
+<tr><td class="heading">Diambil Oleh</td><td><input id ="f_diambil" class="searchbox" type="text" placeholder="Diambil oleh" ></td></tr>
+<tr><td class="heading">Tanggal diserahkan</td><td><input id ="f_tgldiserahkan" class="searchbox" type="text" placeholder="Tanggal diserahkan" ></td></tr>
+
+</table>
+
+<div id="add_2" onclick="packData()">TAMBAH SURAT</div>
+
+</div>
+</body>
+
+
+</html>
+
+
+<script>
+
+var surat_id = $kodesurat["ID"]
+var jenis_surat = "S.1"
+var bagian_surat = "YPM-0000"
+var bulan_tahun = "$kodesurat['month']" +" - "+ $kodesurat["year"]
+var kode_surat = ""
+
+
+
+function updateNomorSurat(){
+	var nodex = document.getElementById("no_surat_string")
+	kode_surat = surat_id +" / "+ jenis_surat +" / "+ bagian_surat + " / " + bulan_tahun
+	nodex.value = kode_surat
+
+}
+
+function jenisSurat(){
+	var node = document.getElementById("jenis_surat")
+	jenis_surat = node.value
+	updateNomorSurat()
+}
+
+function bagianSurat(){
+	console.log("yeah!")
+	var node = document.getElementById("bagian_surat")
+	bagian_surat = node.value
+	updateNomorSurat()
+}
+
+updateNomorSurat()
+
+function packData(){
+	var dataPackage = new Object();
+	dataPackage.ID = surat_id
+	dataPackage.nomor = kode_surat
+	var node = document.getElementById("judul_surat")
+	dataPackage.judul = node.value
+	node = document.getElementById("f_kepadainst")
+	dataPackage.ke_institusi = node.value
+	node = document.getElementById("f_kepadanama")
+	dataPackage.ke_nama = node.value
+	node = document.getElementById("f_kepadajabatan")
+	dataPackage.ke_jabatan = node.value
+	node = document.getElementById("f_tanggalsurat")
+	dataPackage.tanggal = node.value
+	node = document.getElementById("f_darinama")
+	dataPackage.dari_orang = node.value
+	node = document.getElementById("f_daribidang")
+	dataPackage.dari_institusi = node.value
+	node = document.getElementById("f_darijabatan")
+	dataPackage.dari_jabatan = node.value
+	node = document.getElementById("alamat")
+	dataPackage.ke_alamat = node.value
+	node = document.getElementById("f_ttd")
+	dataPackage.penandatangan = node.value
+	node = document.getElementById("f_diketahui")
+	dataPackage.diketahui_direktur_eksekutif = node.checked
+	node = document.getElementById("f_diambil")
+	dataPackage.diambil_oleh = node.value
+	node = document.getElementById("f_tgldiserahkan")
+	dataPackage.tanggal_diserahkan = node.value
+
+
+	console.log(dataPackage)
+	sendData(JSON.stringify(dataPackage))
+
+	
+}
+
+function sendData(package){
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if(this.readyState == 4 && this.status == 200){
+			console.log("Data Sent!")
+			console.log(this.responseText)
+			window.location = "/"
+		}
+	}
+	xhttp.open("POST","/dataGateway")
+	xhttp.send(package)
+}
+
+
+
+
+</script>
