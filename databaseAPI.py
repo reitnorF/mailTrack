@@ -7,13 +7,57 @@ import json
 import base64
 
 #Load database
-suratKeluar = list()
+suratKeluar_list = list()
 with open('suratKeluar','rb') as f:
-	suratKeluar = pickle.load(f)
+	suratKeluar_list = pickle.load(f)
 
 suratMasuk_list = list()
 with open ('suratMasuk','rb') as f:
 	suratMasuk_list = pickle.load(f)
+
+def calculateCategory():
+	for i in suratMasuk_list:
+		noagenda = i["nomor_agenda"]
+		a = re.search("\.([0-9]+)",noagenda)
+		code = a.group(1)
+		code = int(code)
+		if code == 1:
+			i["kategori"] = "Surat Keputusan"
+		elif code == 2:
+			i["kategori"] ="Surat Pengumuman"
+		elif code == 3:
+			i["kategori"] = "Surat Edaran"
+		elif code == 4:
+			i["kategori"] = "Surat Keterangan"
+		elif code == 5:
+			i["kategori"] = "Surat Rekomendasi"
+		elif code == 6:
+			i["kategori"] = "Surat Permohonan"
+		elif code == 7:
+			i["kategori"] = "Surat Undangan"
+		elif code == 8:
+			i["kategori"] = "Surat Kuasa"
+		elif code == 9:
+			i["kategori"] = "Surat Perjanjian"
+		elif code == 10:
+			i["kategori"] = "Surat Pengantar"
+		elif code == 11:
+			i["kategori"] = "Surat Tugas"
+		elif code == 12:
+			i["kategori"] = "Surat Ucapan"
+		elif code == 13:
+			i["kategori"] = "Surat Peringatan"
+		elif code == 14:
+			i["kategori"] = "Surat Ijin"
+		elif code == 15:
+			i["kategori"] = "Surat Pengusulan"
+		elif code == 16:
+			i["kategori"] = "Surat Balasan"
+		elif code == 17:
+			i["kategori"] = "Surat Pembatalan"
+
+
+
 
 
 def getMaxSuratID(listOfSurat):
@@ -53,9 +97,9 @@ def int_to_roman(input):
 
 
 def deleteItemByKey(key):
-	for x in suratKeluar:
+	for x in suratKeluar_list:
 		if x["ID"] == key:
-			suratKeluar.remove(x)
+			suratKeluar_list.remove(x)
 			print x
 
 def deleteItemByKeyMasuk(key):
@@ -68,7 +112,7 @@ def deleteItemByKeyMasuk(key):
 
 def endTransaction():
 	with open("suratKeluar","wb") as f:
-		pickle.dump(suratKeluar,f)
+		pickle.dump(suratKeluar_list,f)
 
 def endTransaction_suratMasuk():
 	with open("suratMasuk","wb") as f:
@@ -77,7 +121,7 @@ def endTransaction_suratMasuk():
 
 
 def generateNewKodeSurat():
-	lastSuratID = getMaxSuratID(suratKeluar) + 1
+	lastSuratID = getMaxSuratID(suratKeluar_list) + 1
 	now = datetime.datetime.now()
 	year = now.strftime("%Y")
 	month  = now.strftime("%m")
@@ -102,9 +146,10 @@ def generateNewKodeSuratMasuk():
 
 #Web Server URL Routing Configuration
 urls = (
-    '/', 'index',
+    '/', 'suratMasuk',
     '/login','login',
     '/suratMasuk', 'suratMasuk',
+    '/suratKeluar', 'suratKeluar',
     '/addmail', 'addmail',
     '/addmailin', 'addmailin',
     '/dataGateway', 'dataGateway',
@@ -118,6 +163,12 @@ allowed = (
 		('admin','adminsalman'),
 		('x','y')
 )
+
+
+def loginCheck():
+	if web.ctx.env.get('HTTP_AUTHORIZATION') is None:
+		raise web.seeother('/login')
+
 
 
 class login:
@@ -140,6 +191,7 @@ class login:
 
 class addmailin:
 	def GET(self):
+		loginCheck()
 		render = web.template.render('templates')
 		kodesurat = generateNewKodeSuratMasuk()
 		return render.addin(kodesurat)
@@ -147,41 +199,51 @@ class addmailin:
 
 class suratMasuk:
 	def GET(self):
+		loginCheck()
 		render = web.template.render('templates')
+		calculateCategory()
 		return render.suratmasuk(suratMasuk_list)
+
+class suratKeluar:
+	def GET(self):
+		loginCheck()
+		render = web.template.render('templates')
+		return render.suratkeluar(suratKeluar_list)
 
 
 class editSuratKeluar:
 	def GET(self,id):
+		loginCheck()
 		render = web.template.render('templates')
 		return render.suratkeluar(suratmasuk)
 
 class index:
 	def GET(self):
-		if web.ctx.env.get('HTTP_AUTHORIZATION') is not None:
-			render = web.template.render('templates')
-			return render.suratkeluar(suratKeluar)
-		else:
-			raise web.seeother('/login')
+		loginCheck()
+		render = web.template.render('templates')
+		return render.suratkeluar(suratKeluar_list)
 
 class addmail:
 	def GET(self):
+		loginCheck()
 		render = web.template.render('templates')
 		kodesurat = generateNewKodeSurat()
 		return render.add(kodesurat)
 
 class dataGateway:
 	def POST(self):
+		loginCheck()
 		data = web.data()
 		packagedData = json.loads(data)
 		print packagedData["tanggal"]
-		suratKeluar.append(packagedData)
+		suratKeluar_list.append(packagedData)
 		with open("suratKeluar","wb") as f:
-			pickle.dump(suratKeluar,f)
+			pickle.dump(suratKeluar_list,f)
 		return data
 
 class dataGatewayMasuk:
 	def POST(self):
+		loginCheck()
 		data = web.data()
 		packagedData = json.loads(data)
 		suratMasuk_list.append(packagedData)
@@ -190,6 +252,7 @@ class dataGatewayMasuk:
 
 class requestDelete:
 	def POST(self):
+		loginCheck()
 		data = web.data()
 		print data
 		deleteItemByKey(int(data))
@@ -198,6 +261,7 @@ class requestDelete:
 
 class requestDeleteMasuk:
 	def POST(self):
+		loginCheck()
 		data = web.data()
 		print data
 		deleteItemByKeyMasuk(int(data))

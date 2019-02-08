@@ -30,6 +30,11 @@ for x in range (5,222):
 	surat["tanggal_terima"] = a['O'+str(x)].value
 	surat["surat_diambil_oleh"] = a['P'+str(x)].value
 	surat["keterangan"] = a['Q'+str(x)].value
+
+	
+
+
+
 	idSuratMasuk += 1
 	suratMasuk.append(surat)
 	print surat

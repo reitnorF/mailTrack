@@ -193,7 +193,7 @@ font-family: helvetica;
 
 <div id="menus">
 		<a href="/suratMasuk"><div class="blockmenu  ">Surat Masuk </div></a>
-		<a href="/"><div class="blockmenu active ">Surat Keluar </div></a>
+		<a href="/suratKeluar"><div class="blockmenu active ">Surat Keluar </div></a>
 	</div>
 	<a href="/addmailin"><div id="add">TAMBAH SURAT MASUK</div></a>
 	<a href="/addmail"><div id="add">TAMBAH SURAT KELUAR</div></a>
@@ -393,7 +393,7 @@ function sendData(package){
 		if(this.readyState == 4 && this.status == 200){
 			console.log("Data Sent!")
 			console.log(this.responseText)
-			window.location = "/"
+			window.location = "/suratKeluar"
 		}
 	}
 	xhttp.open("POST","/dataGateway")

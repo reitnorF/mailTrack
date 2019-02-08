@@ -156,7 +156,7 @@ font-family: helvetica;
 	<img src="static/logo.png">	
 	<div id="menus">
 		<div class="blockmenu active">Surat Masuk </div>
-		<a href="/"><div class="blockmenu ">Surat Keluar </div></a>
+		<a href="/suratKeluar"><div class="blockmenu ">Surat Keluar </div></a>
 	</div>
 	<a href="/addmailin"><div id="add">TAMBAH SURAT MASUK</div></a>
 	<a href="/addmail"><div id="add">TAMBAH SURAT KELUAR</div></a>
@@ -170,7 +170,7 @@ font-family: helvetica;
 
 $for i in reversed(suratMasuk):
 	<div class="singlemail" onclick="getinfo(this)" id='$i["ID"]'>
-	<h2> $i["dari_institusi"] <br><hr>  <b style='font-weight: lighter;'>$i["judul"] <br> $i["ringkasan"] </b> </h2>
+	<h2> <b style='font-weight: lighter;'>$i["kategori"]</b><br> <b style='font-size: 19px;'> $i["dari_institusi"] </b> <br><hr>  <b style='font-weight: lighter;'>$i["judul"] <br> $i["ringkasan"] </b> </h2>
 	<table style='display:none' class="detail" cellspacing="10px">
 		<tr><td>Nomor Surat</td><td>$i["nomor_surat"] </td></tr>
 		<tr><td>Nomor Agenda</td><td>$i["nomor_agenda"] </td></tr>
