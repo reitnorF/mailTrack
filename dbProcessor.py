@@ -2,104 +2,65 @@ import pickle
 import re
 from convertdate import islamic
 import datetime
+from openpyxl import Workbook
 
 
 
-suratKeluar_list = list()
-with open('suratKeluar','rb') as f:
-	suratKeluar_list = pickle.load(f)
+
+suratMasuk_list = list()
+with open('suratMasuk','rb') as f:
+	suratMasuk_list = pickle.load(f)
 
 
 
-for i in suratKeluar_list:
-	noagenda = i["nomor"]
-	print noagenda
-	a = re.search("\.([0-9]+).*YPM - (\w{4}) /",noagenda)
-	code = -1
-	g2 = "-"
-	if a is not None:
-		print a.group(1) +"---" + a.group(2)
-		code = int(a.group(1))
-		g2 = a.group(2)
-	if code == 1:
-		i["kategori"] = "Surat Keputusan"
-	elif code == 2:
-		i["kategori"] ="Surat Pengumuman"
-	elif code == 3:
-		i["kategori"] = "Surat Edaran"
-	elif code == 4:
-		i["kategori"] = "Surat Keterangan"
-	elif code == 5:
-		i["kategori"] = "Surat Rekomendasi"
-	elif code == 6:
-		i["kategori"] = "Surat Permohonan"
-	elif code == 7:
-		i["kategori"] = "Surat Undangan"
-	elif code == 8:
-		i["kategori"] = "Surat Kuasa"
-	elif code == 9:
-		i["kategori"] = "Surat Perjanjian"
-	elif code == 10:
-		i["kategori"] = "Surat Pengantar"
-	elif code == 11:
-		i["kategori"] = "Surat Tugas"
-	elif code == 12:
-		i["kategori"] = "Surat Ucapan"
-	elif code == 13:
-		i["kategori"] = "Surat Peringatan"
-	elif code == 14:
-		i["kategori"] = "Surat Ijin"
-	elif code == 15:
-		i["kategori"] = "Surat Pengusulan"
-	elif code == 16:
-		i["kategori"] = "Surat Balasan"
-	elif code == 17:
-		i["kategori"] = "Surat Pembatalan"
-	else:
-		i["kategori"] = ""
-		
+book = Workbook()
+sheet = book.active
+
+num = 1 
+sheet['B'+str(num)] = "Nama Pengirim" 
+sheet['C'+str(num)] = "Institusi Pengirim" 
+sheet['D'+str(num)] = "Alamat Pengirim"
+sheet['E'+str(num)] = "Kontak Pengirim"
+sheet['F'+str(num)] = "Jabatan Pengirim"
+sheet['G'+str(num)] = "Nama Tujuan Surat"  
+sheet['H'+str(num)] = "Bidang Tujuan Surat" 
+sheet['I'+str(num)] = "Jabatan Tujuan Surat" 
+sheet['J'+str(num)] = "Judul Surat"
+sheet['K'+str(num)] = "Ringkasan "
+sheet['L'+str(num)] = "Nomor Surat"
+sheet['M'+str(num)] = "Tanggal Surat"
+sheet['N'+str(num)] = "Nomor Agenda"
+sheet['O'+str(num)] = "Tanggal Diterima" 
+sheet['P'+str(num)] = "Surat Diambil Oleh" 
+sheet['Q'+str(num)] = "Keterangan"
+
+num = 2
+for surat in suratMasuk_list:
+	sheet['B'+str(num)] = surat["dari_orang"] 
+	sheet['C'+str(num)] = surat["dari_institusi"] 
+	sheet['D'+str(num)] = surat["dari_alamat"] 
+	sheet['E'+str(num)] = surat["dari_kontak"]
+	sheet['F'+str(num)] = surat["dari_jabatan"] 
+	sheet['G'+str(num)] = surat["ke_orang"] 
+	sheet['H'+str(num)] = surat["ke_bidang"] 
+	sheet['I'+str(num)] = surat["ke_jabatan"] 
+	sheet['J'+str(num)] = surat["judul"] 
+	sheet['K'+str(num)] = surat["ringkasan"] 
+	sheet['L'+str(num)] = surat["nomor_surat"] 
+	sheet['M'+str(num)] = surat["tanggal_surat"] 
+	sheet['N'+str(num)] = surat["nomor_agenda"] 
+	sheet['O'+str(num)] = surat["tanggal_terima"] 
+	sheet['P'+str(num)] = surat["surat_diambil_oleh"] 
+	sheet['Q'+str(num)] = surat["keterangan"] 
+	num += 1
+
+book.save("test.xlsx")
 
 
+'''
+book = Workbook()
+sheet = book.active
 
-'''	
-	code = int(code)
-	if code == 1:
-		i["kategori"] = "Surat Keputusan"
-	elif code == 2:
-		i["kategori"] ="Pengumuman"
-	elif code == 3:
-		i["kategori"] = "Surat Edaran"
-	elif code == 4:
-		i["kategori"] = "Surat Keterangan"
-	elif code == 5:
-		i["kategori"] = "Rekomendasi"
-	elif code == 6:
-		i["kategori"] = "Permohonan"
-	elif code == 7:
-		i["kategori"] = "Undangan"
-	elif code == 8:
-		i["kategori"] = "Surat Kuasa"
-	elif code == 9:
-		i["kategori"] = "Perjanjian"
-	elif code == 10:
-		i["kategori"] = "Surat Pengantar"
-	elif code == 11:
-		i["kategori"] = "Surat Tugas"
-	elif code == 12:
-		i["kategori"] = "Ucapan"
-	elif code == 13:
-		i["kategori"] = "Surat Peringatan"
-	elif code == 14:
-		i["kategori"] = "Ijin"
-	elif code == 15:
-		i["kategori"] = "Pengusulan"
-	elif code == 16:
-		i["kategori"] = "Balasan"
-	elif code == 17:
-		i["kategori"] = "Pembatalan"
-
-
-
-for i in suratMasuk_list:
-	print i["kategori"]
+sheet['A1'] = "Yo!"
+book.save("test.xlsx")
 '''

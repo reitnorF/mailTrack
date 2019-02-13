@@ -113,10 +113,13 @@ font-family: helvetica;
 }
 
 #searchbox {
-	    margin-left: 334px;
+	margin-left: 334px;
     margin-top: 17px;
-    padding: 10px;
+    padding: 11px;
     width: 600px;
+    border: 1px solid #cacaca;
+    border-radius: 5px;
+    padding-left: 25px;
 }
 
 #sidebar a{
@@ -157,12 +160,13 @@ font-family: helvetica;
 	<div id="menus">
 		<div class="blockmenu active">Surat Masuk </div>
 		<a href="/suratKeluar"><div class="blockmenu ">Surat Keluar </div></a>
+		<a href="/download"><div class="blockmenu ">Download Backup </div></a>
 	</div>
 	<a href="/addmailin"><div id="add">TAMBAH SURAT MASUK</div></a>
 	<a href="/addmail"><div id="add">TAMBAH SURAT KELUAR</div></a>
 </div>
 <div id="topbar">
-<input id="searchbox" type="text" style='display:none' placeholder="Search" onkeypress="search(event)">
+<input id="searchbox" type="text" style='display:block' placeholder="Search" onkeypress="search(event)">
 <h1>Admin  &#9660;</h1>
 </div>
 
