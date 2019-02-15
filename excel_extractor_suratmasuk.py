@@ -11,7 +11,7 @@ a = wb.active
 suratMasuk = list()
 idSuratMasuk = 1
 
-for x in range (5,222):
+for x in range (5,246):
 	surat=dict()
 	surat["ID"] = idSuratMasuk
 	surat["dari_orang"] = a['B'+str(x)].value

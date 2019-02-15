@@ -9,7 +9,6 @@ import base64
 from openpyxl import Workbook
 
 
-
 #Load database
 suratKeluar_list = list()
 with open('suratKeluar','rb') as f:
@@ -168,7 +167,7 @@ def calculateCategory():
 
 
 
-def getMaxSuratID(listOfSurat):
+def getMaxSuratID_deprecated(listOfSurat):
 	max = -1
 	for x in listOfSurat:
 		nomorSurat = x["nomor"]
@@ -178,8 +177,24 @@ def getMaxSuratID(listOfSurat):
 			max = suratID
 	return max
 
+def getMaxSuratID(listOfSurat):
+	length = len(listOfSurat)
+	last = listOfSurat[length-1]
+	nomorSurat = last["nomor"]
+	match = re.match("(\A[0-9]+)",nomorSurat)
+	suratID = int(match.group(1))
+	return suratID
+
 
 def getMaxSuratMasukID(listOfSurat):
+	length = len(listOfSurat)
+	last = listOfSurat[length-1]
+	nomorSurat = last["nomor_agenda"]
+	match = re.match("(\A[0-9]+)",nomorSurat)
+	suratID = int(match.group(1))
+	return suratID
+
+def getMaxSuratMasukID_deprecated(listOfSurat):
 	max = -1
 	for x in listOfSurat:
 		nomorSurat = x["nomor_agenda"]
@@ -188,6 +203,8 @@ def getMaxSuratMasukID(listOfSurat):
 		if suratID > max:
 			max = suratID
 	return max
+
+
 
 def int_to_roman(input):
 	if not isinstance(input, type(1)):
@@ -385,6 +402,7 @@ class requestDeleteMasuk:
 		return data
 
 #Start Web Server
+
 if __name__ == "__main__":
     app = web.application(urls, globals())
     app.run()
