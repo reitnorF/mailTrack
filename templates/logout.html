@@ -1,0 +1,46 @@
+
+
+<html>
+<head>
+<title>SalmanTracking</title>
+<link rel="shortcut icon" type="image/png" href="static/icon.png"/>
+
+
+
+
+
+
+<style>
+
+
+
+</style>
+
+</head>
+
+<body>
+
+</body>
+
+
+</html>
+
+
+<script>
+
+function logout(secUrl, redirUrl) {
+		var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", secUrl, true);
+    xmlhttp.setRequestHeader("Authorization", "YWJhOmJhYmE=");
+    xmlhttp.send();
+    setTimeout(function () {
+        window.location.href = redirUrl;
+    }, 200);
+
+    
+}
+
+
+logout("/login","/logoutpage")
+
+</script>

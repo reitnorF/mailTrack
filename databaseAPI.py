@@ -76,7 +76,7 @@ def exportToExcel():
 		sheet['Q'+str(num)] = surat["keterangan"] 
 		num += 1
 
-	adjustColumnWidth()
+	#adjustColumnWidth()
 	book.create_sheet("Surat Keluar")
 	sheet= book.get_sheet_by_name("Surat Keluar")
 
@@ -118,7 +118,7 @@ def exportToExcel():
 		sheet['P'+str(num)] = surat["keterangan"] 
 		num += 1
 
-	adjustColumnWidth()
+	#adjustColumnWidth()
 	book.save("static/suratsalman.xlsx")
 
 
@@ -282,6 +282,8 @@ urls = (
     '/requestDelete', 'requestDelete',
     '/requestDeleteMasuk', 'requestDeleteMasuk',
     '/download' , 'download',
+   	'/logout','logout',
+   	'/logoutpage','logoutpage',
     '/editSuratKeluar/(.+)', 'editSuratKeluar'
 )
 
@@ -320,6 +322,17 @@ class download:
 		loginCheck()
 		exportToExcel()
 		raise web.seeother('/static/suratsalman.xlsx')
+
+
+class logout:
+	def GET(self):
+		render = web.template.render('templates')
+		return render.logout()
+
+class logoutpage:
+	def GET(self):
+		render = web.template.render('templates')
+		return render.logoutpage()
 
 
 class addmailin:

@@ -3,14 +3,10 @@ import openpyxl
 import string
 import pickle
 
-
 wb = openpyxl.load_workbook('a.xlsx')
 a = wb.active
-
-
 suratKeluar = list()
 idSuratKeluar = 1
-
 for x in range (5,1157):
 	surat=dict()
 	surat["ID"] = idSuratKeluar
@@ -31,8 +27,8 @@ for x in range (5,1157):
 	surat["keterangan"] = a['P'+str(x)].value
 	idSuratKeluar += 1
 	suratKeluar.append(surat)
-
-
-
 with open("suratKeluar","wb") as f:
 	pickle.dump(suratKeluar,f)
+
+
+	
